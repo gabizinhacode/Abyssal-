@@ -1,0 +1,3426 @@
+/* =========================================================
+   ABYSSAL
+   AS CRÔNICAS DO MAR ESQUECIDO
+   TEMA COZY PIXEL ART
+   ========================================================= */
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  background: #182b25;
+  color: #fff4d6;
+  font-family: Arial, Helvetica, sans-serif;
+  image-rendering: pixelated;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+button:focus-visible {
+  outline: 3px solid #f6cf63;
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   CORES
+   ========================================================= */
+
+:root {
+  --verde-noite: #182b25;
+  --verde-floresta: #29483a;
+  --verde-folha: #4d7650;
+  --verde-claro: #79a85b;
+
+  --azul-mar: #326b78;
+  --azul-agua: #62aeb0;
+  --azul-profundo: #1f4654;
+
+  --madeira: #795333;
+  --madeira-escura: #4b3020;
+  --madeira-clara: #a9794b;
+
+  --creme: #fff4d6;
+  --papel: #f0d99a;
+  --papel-claro: #ffe9ad;
+
+  --dourado: #f6cf63;
+  --dourado-escuro: #b47b2e;
+
+  --rosa: #d9868f;
+  --roxo: #8066a9;
+
+  --texto: #fff4d6;
+  --texto-suave: #d8c99e;
+
+  --sucesso: #75a958;
+  --perigo: #b95858;
+
+  --borda: #3c2a1c;
+  --painel: #355744;
+
+  --sombra:
+    0 5px 0 #111b17,
+    0 8px 16px rgba(0, 0, 0, 0.35);
+}
+
+/* =========================================================
+   APP
+   ========================================================= */
+
+#root {
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+
+  background:
+    radial-gradient(
+      circle at 20% 15%,
+      rgba(121, 168, 91, 0.16),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(98, 174, 176, 0.13),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #1d352c,
+      #203e31 50%,
+      #172920
+    );
+}
+
+/* =========================================================
+   BOTÃO PRINCIPAL
+   ========================================================= */
+
+.botao-principal {
+  min-height: 45px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 22px;
+
+  border: 3px solid var(--madeira-escura);
+  border-radius: 5px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f6d36e 0%,
+      #e7b84f 45%,
+      #c89035 100%
+    );
+
+  color: #4a3017;
+
+  font-size: 13px;
+  font-weight: bold;
+
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.35),
+    0 4px 0 #3b2818,
+    0 7px 12px rgba(0, 0, 0, 0.25);
+
+  transition:
+    transform 0.12s ease,
+    filter 0.12s ease;
+}
+
+.botao-principal:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+}
+
+.botao-principal:active {
+  transform: translateY(2px);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.2),
+    0 2px 0 #3b2818;
+}
+
+/* =========================================================
+   BOTÃO SECUNDÁRIO
+   ========================================================= */
+
+.botao-secundario {
+  min-height: 40px;
+
+  padding: 8px 16px;
+
+  border: 3px solid var(--madeira-escura);
+  border-radius: 5px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #7c9a68,
+      #526f4e
+    );
+
+  color: var(--creme);
+
+  font-size: 12px;
+  font-weight: bold;
+
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.12),
+    0 4px 0 #263a2c;
+
+  transition: 0.12s ease;
+}
+
+.botao-secundario:hover {
+  background:
+    linear-gradient(
+      180deg,
+      #91ae72,
+      #607f58
+    );
+
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   TEXTURA GERAL DOS PAINÉIS
+   ========================================================= */
+
+.mapa-header,
+.inventario-header,
+.painel-historia,
+.painel-quiz,
+.painel-tesouro,
+.painel-pista,
+.painel-concluido,
+.inventario-secao,
+.tutorial-card,
+.conclusao-card,
+.personagem-card {
+  border: 4px solid var(--madeira-escura);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(68, 94, 63, 0.98),
+      rgba(42, 67, 52, 0.98)
+    );
+
+  box-shadow: var(--sombra);
+}
+
+/* =========================================================
+   ====================== MAPA =============================
+   ========================================================= */
+
+.tela-mapa {
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 25px 40px 45px;
+
+  position: relative;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(121, 168, 91, 0.15),
+      transparent 25%
+    ),
+    linear-gradient(
+      180deg,
+      #294a38,
+      #203c30
+    );
+}
+
+/* =========================================================
+   HUD
+   ========================================================= */
+
+.mapa-header {
+  width: 100%;
+  max-width: 1200px;
+  min-height: 105px;
+
+  margin: 0 auto 30px;
+  padding: 16px 22px;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+
+  border-radius: 6px;
+}
+
+.jogador-hud {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar-jogador {
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 3px solid var(--madeira-escura);
+  border-radius: 5px;
+
+  background: #668957;
+
+  font-size: 25px;
+
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 240, 180, 0.2);
+}
+
+.jogador-info span {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #a8d77e;
+
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.jogador-info strong {
+  display: block;
+
+  color: var(--creme);
+  font-size: 15px;
+}
+
+.titulo-mapa {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  text-align: left;
+}
+
+.icone-mapa {
+  font-size: 29px;
+}
+
+.titulo-mapa h1 {
+  color: var(--papel);
+
+  font-family: Georgia, serif;
+  font-size: 30px;
+
+  letter-spacing: 2px;
+
+  text-shadow:
+    2px 2px 0 #4c321f;
+}
+
+.titulo-mapa small {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #b7d79b;
+
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.fragmentos-hud {
+  justify-self: end;
+  text-align: right;
+}
+
+.fragmentos-numero {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.fragmentos-numero span {
+  font-size: 19px;
+}
+
+.fragmentos-numero strong {
+  color: var(--creme);
+  font-size: 17px;
+}
+
+.fragmentos-hud small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #a8d77e;
+
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* =========================================================
+   ÁREA DO MAPA
+   ========================================================= */
+
+.mapa-area {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 0 auto;
+}
+
+.mapa-titulo {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  gap: 70px;
+
+  margin-bottom: 28px;
+}
+
+.mapa-titulo-texto {
+  min-width: 350px;
+}
+
+.mapa-titulo-texto p {
+  margin-bottom: 6px;
+
+  color: #a8d77e;
+
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.mapa-titulo-texto h2 {
+  color: var(--creme);
+
+  font-family: Georgia, serif;
+  font-size: 28px;
+}
+
+.mapa-descricao {
+  padding-bottom: 3px;
+
+  color: var(--texto-suave);
+
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   ROTA
+   ========================================================= */
+
+.rota-mapa {
+  width: min(950px, 100%);
+  min-height: 700px;
+
+  margin: 0 auto;
+  padding: 20px 0;
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* =========================================================
+   CAMINHO CENTRAL
+   ========================================================= */
+
+.linha-rota {
+  position: absolute;
+
+  top: 45px;
+  bottom: 45px;
+  left: 50%;
+
+  width: 8px;
+
+  transform: translateX(-50%);
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      #a87943 0,
+      #a87943 12px,
+      #6c4d31 12px,
+      #6c4d31 20px
+    );
+
+  border-left: 2px solid #3e2a1d;
+  border-right: 2px solid #3e2a1d;
+
+  opacity: 0.85;
+
+  z-index: 0;
+}
+
+/* =========================================================
+   NÓS DO MAPA
+   ========================================================= */
+
+.mapa-node {
+  width: 390px;
+  min-height: 90px;
+
+  position: relative;
+  z-index: 2;
+
+  display: grid;
+  grid-template-columns: 40px 58px 1fr;
+
+  align-items: center;
+  gap: 12px;
+
+  padding: 12px 15px;
+
+  border: 3px solid var(--madeira-escura);
+  border-radius: 6px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #54744f,
+      #3b5a43
+    );
+
+  color: var(--creme);
+
+  box-shadow:
+    0 4px 0 #202f25,
+    0 7px 15px rgba(0, 0, 0, 0.3);
+
+  transition:
+    transform 0.15s ease,
+    filter 0.15s ease;
+}
+
+.mapa-node:nth-child(odd) {
+  align-self: flex-start;
+}
+
+.mapa-node:nth-child(even) {
+  align-self: flex-end;
+}
+
+.mapa-node:hover {
+  filter: brightness(1.08);
+}
+
+/* =========================================================
+   NÚMERO
+   ========================================================= */
+
+.node-numero {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 3px solid var(--madeira-escura);
+  border-radius: 50%;
+
+  background: var(--papel);
+
+  color: #56391e;
+
+  font-family: Georgia, serif;
+  font-size: 13px;
+  font-weight: bold;
+
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+/* =========================================================
+   ÍCONE
+   ========================================================= */
+
+.node-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 3px solid var(--madeira-escura);
+  border-radius: 6px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #6d9970,
+      #44684e
+    );
+
+  font-size: 29px;
+}
+
+/* =========================================================
+   INFORMAÇÕES
+   ========================================================= */
+
+.node-info {
+  min-width: 0;
+}
+
+.node-info strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: var(--creme);
+
+  font-family: Georgia, serif;
+  font-size: 16px;
+
+  white-space: nowrap;
+
+  text-shadow: 1px 1px 0 #263a2c;
+}
+
+.node-info > span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #b5db8a;
+
+  font-size: 10px;
+}
+
+.node-info small {
+  display: block;
+
+  color: #d5cda8;
+
+  font-size: 10px;
+}
+
+.node-info em {
+  display: inline-block;
+
+  margin-top: 5px;
+
+  font-size: 9px;
+  font-style: normal;
+  font-weight: bold;
+}
+
+/* =========================================================
+   DISPONÍVEL
+   ========================================================= */
+
+.mapa-node.disponivel {
+  border-color: #d9bd62;
+
+  background:
+    linear-gradient(
+      135deg,
+      #668b59,
+      #456c4c
+    );
+
+  box-shadow:
+    0 0 0 2px rgba(246, 207, 99, 0.12),
+    0 5px 0 #253629,
+    0 8px 18px rgba(0, 0, 0, 0.35);
+}
+
+.mapa-node.disponivel:hover {
+  transform: scale(1.025);
+
+  border-color: var(--dourado);
+}
+
+.mapa-node.disponivel .node-info em {
+  color: #d7ed9e;
+}
+
+/* =========================================================
+   CONCLUÍDA
+   ========================================================= */
+
+.mapa-node.completa {
+  border-color: #719b55;
+
+  background:
+    linear-gradient(
+      135deg,
+      #4f754e,
+      #365640
+    );
+}
+
+.mapa-node.completa .node-numero {
+  border-color: #658b4e;
+  color: #4e713f;
+}
+
+.mapa-node.completa .node-icon {
+  border-color: #719b55;
+  color: #a7d478;
+}
+
+.mapa-node.completa .node-info em {
+  color: #a7d478;
+}
+
+/* =========================================================
+   BLOQUEADA
+   ========================================================= */
+
+.mapa-node.bloqueada {
+  opacity: 0.58;
+
+  filter: grayscale(0.6);
+
+  border-color: #4a554d;
+
+  background:
+    linear-gradient(
+      135deg,
+      #39473f,
+      #303a35
+    );
+}
+
+.mapa-node.bloqueada .node-numero {
+  border-color: #66716a;
+  color: #737d77;
+}
+
+.mapa-node.bloqueada .node-info strong {
+  color: #a0a59e;
+}
+
+.mapa-node.bloqueada .node-info em {
+  color: #8e9790;
+}
+
+/* =========================================================
+   RODAPÉ MAPA
+   ========================================================= */
+
+.mapa-footer {
+  width: min(950px, 100%);
+
+  margin: 25px auto 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.mapa-footer p {
+  color: var(--texto-suave);
+
+  font-size: 12px;
+  text-align: right;
+}
+
+/* =========================================================
+   ==================== AVENTURA ===========================
+   ========================================================= */
+
+.tela-aventura {
+  width: 100%;
+  min-height: 100vh;
+
+  padding-bottom: 50px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #294a38,
+      #1c3329
+    );
+}
+
+.aventura-header {
+  min-height: 70px;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+
+  align-items: center;
+
+  padding: 10px 25px;
+
+  border-bottom: 4px solid var(--madeira-escura);
+
+  background:
+    linear-gradient(
+      180deg,
+      #5b764e,
+      #405d43
+    );
+
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.botao-voltar {
+  justify-self: start;
+
+  padding: 7px 12px;
+
+  border: 3px solid var(--madeira-escura);
+  border-radius: 5px;
+
+  background: #7d9b67;
+
+  color: var(--creme);
+
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.botao-voltar:hover {
+  background: #91ad74;
+}
+
+.aventura-titulo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.aventura-icone {
+  font-size: 27px;
+}
+
+.aventura-titulo p {
+  color: #c3df91;
+
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+
+.aventura-titulo h1 {
+  color: var(--papel);
+
+  font-family: Georgia, serif;
+  font-size: 21px;
+
+  text-shadow: 2px 2px 0 #4b3320;
+}
+
+.dificuldade {
+  justify-self: end;
+
+  color: #f3d675;
+
+  font-size: 11px;
+  font-weight: bold;
+}
+
+/* =========================================================
+   PERSONAGEM AVENTURA
+   ========================================================= */
+
+.personagem-aventura {
+  width: min(850px, calc(100% - 40px));
+
+  margin: 18px auto 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 9px 12px;
+
+  border: 3px solid var(--madeira-escura);
+  border-radius: 6px;
+
+  background: #52704e;
+
+  box-shadow:
+    0 4px 0 #263a2d;
+}
+
+.personagem-avatar {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 3px solid var(--madeira-escura);
+  border-radius: 5px;
+
+  background: #77955e;
+
+  font-size: 21px;
+}
+
+.personagem-aventura span {
+  display: block;
+
+  color: #b9dc8c;
+
+  font-size: 8px;
+}
+
+.personagem-aventura strong {
+  display: block;
+
+  color: var(--creme);
+
+  font-size: 13px;
+}
+
+/* =========================================================
+   PAINÉIS
+   ========================================================= */
+
+.painel-historia,
+.painel-quiz,
+.painel-tesouro,
+.painel-pista,
+.painel-concluido {
+  width: min(850px, calc(100% - 40px));
+
+  margin: 22px auto;
+
+  padding: 24px;
+
+  border-radius: 7px;
+}
+
+/* =========================================================
+   HISTÓRIA
+   ========================================================= */
+
+.historia-cabecalho {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding-bottom: 15px;
+
+  border-bottom: 3px solid rgba(255, 244, 214, 0.1);
+}
+
+.npc-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 3px solid var(--madeira-escura);
+  border-radius: 6px;
+
+  background: #71915f;
+
+  font-size: 30px;
+}
+
+.historia-cabecalho span {
+  color: #b9dc8c;
+
+  font-size: 9px;
+}
+
+.historia-cabecalho h2 {
+  color: var(--papel);
+
+  font-family: Georgia, serif;
+  font-size: 19px;
+}
+
+.caixa-dialogo {
+  margin: 15px 0;
+
+  padding: 15px 16px;
+
+  border: 3px solid #563a24;
+  border-left: 6px solid var(--dourado);
+
+  background:
+    linear-gradient(
+      135deg,
+      #4d6449,
+      #40583f
+    );
+}
+
+.caixa-dialogo p {
+  color: var(--creme);
+
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+/* =========================================================
+   LOCAL
+   ========================================================= */
+
+.local-info {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 13px;
+
+  margin: 15px 0;
+
+  border: 3px solid #3d2b1e;
+  border-radius: 6px;
+
+  background: #49694e;
+}
+
+.local-icon {
+  font-size: 30px;
+}
+
+.local-info h3 {
+  color: #b8da88;
+
+  font-size: 15px;
+}
+
+.local-info p {
+  margin-top: 4px;
+
+  color: #d7cea9;
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   GUARDIÃO
+   ========================================================= */
+
+.guardiao {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 11px;
+
+  border: 3px solid #63403e;
+  border-radius: 6px;
+
+  background: rgba(185, 88, 88, 0.13);
+}
+
+.guardiao-icon {
+  font-size: 28px;
+}
+
+.guardiao span {
+  display: block;
+
+  color: #e59b91;
+
+  font-size: 8px;
+}
+
+.guardiao strong {
+  display: block;
+
+  margin-top: 2px;
+
+  color: var(--creme);
+
+  font-size: 13px;
+}
+
+.guardiao small {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #d6cbaa;
+
+  font-size: 10px;
+}
+
+.painel-historia .botao-principal {
+  width: 100%;
+  margin-top: 18px;
+}
+
+/* =========================================================
+   QUIZ
+   ========================================================= */
+
+.quiz-topo {
+  margin-bottom: 20px;
+}
+
+.quiz-topo span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #b7d98a;
+
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.barra-progresso {
+  width: 100%;
+  height: 10px;
+
+  overflow: hidden;
+
+  border: 3px solid #3b2a1d;
+  border-radius: 4px;
+
+  background: #26382b;
+}
+
+.barra-progresso div {
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      #6e9e54,
+      #a9c86b
+    );
+
+  transition: width 0.3s ease;
+}
+
+.quiz-pergunta {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  margin-bottom: 20px;
+}
+
+.quiz-numero {
+  color: var(--dourado);
+
+  font-family: Georgia, serif;
+  font-size: 18px;
+}
+
+.quiz-pergunta h2 {
+  color: var(--creme);
+
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.quiz-opcoes {
+  display: grid;
+  gap: 9px;
+}
+
+.opcao {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 12px 13px;
+
+  border: 3px solid #3d2b1e;
+  border-radius: 5px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #506e4e,
+      #405c44
+    );
+
+  color: var(--creme);
+
+  font-size: 13px;
+  text-align: left;
+
+  box-shadow: 0 3px 0 #263a2b;
+
+  transition: 0.12s ease;
+}
+
+.opcao:hover {
+  border-color: #b6d77e;
+  transform: translateX(2px);
+}
+
+.opcao.selecionada {
+  border-color: var(--dourado);
+
+  background:
+    linear-gradient(
+      135deg,
+      #6b7549,
+      #53613f
+    );
+}
+
+.opcao span {
+  color: var(--dourado);
+  font-weight: bold;
+}
+
+.feedback {
+  margin: 13px 0;
+
+  padding: 10px;
+
+  border: 2px solid;
+  border-radius: 5px;
+
+  font-size: 12px;
+}
+
+.feedback.correto {
+  border-color: #658c4d;
+  background: rgba(117, 169, 88, 0.18);
+  color: #c2e69c;
+}
+
+.feedback.erro {
+  border-color: #87494d;
+  background: rgba(185, 88, 88, 0.15);
+  color: #efb0a9;
+}
+
+.painel-quiz .botao-principal {
+  width: 100%;
+  margin-top: 15px;
+}
+
+/* =========================================================
+   TESOURO
+   ========================================================= */
+
+.painel-tesouro {
+  text-align: center;
+}
+
+.tesouro-brilho {
+  font-size: 22px;
+}
+
+.etiqueta {
+  color: #b7d98a;
+
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+.bau {
+  margin: 15px 0;
+
+  font-size: 50px;
+
+  filter:
+    drop-shadow(3px 4px 0 #3c2819);
+}
+
+.painel-tesouro h2 {
+  color: var(--papel);
+
+  font-family: Georgia, serif;
+  font-size: 21px;
+}
+
+.painel-tesouro p {
+  color: var(--texto-suave);
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   PISTA
+   ========================================================= */
+
+.painel-pista {
+  text-align: center;
+}
+
+.pista-decoracao {
+  font-size: 28px;
+}
+
+.pergaminho {
+  margin: 18px 0;
+
+  padding: 25px 20px;
+
+  border: 4px solid #694722;
+  border-radius: 4px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #d4b86c,
+      #f4dc98,
+      #c7a459
+    );
+
+  color: #392818;
+
+  box-shadow:
+    inset 0 0 20px rgba(94, 57, 20, 0.15),
+    0 4px 0 #392819;
+}
+
+.pergaminho p {
+  font-family: Georgia, serif;
+
+  font-size: 17px;
+  font-style: italic;
+
+  line-height: 1.6;
+}
+
+/* =========================================================
+   CONCLUSÃO DO PAINEL
+   ========================================================= */
+
+.painel-concluido {
+  text-align: center;
+}
+
+.concluido-titulo {
+  margin-bottom: 10px;
+
+  color: #9dca73;
+
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.painel-concluido h2 {
+  color: var(--papel);
+
+  font-family: Georgia, serif;
+  font-size: 23px;
+
+  margin-bottom: 20px;
+}
+
+.recompensa {
+  display: grid;
+  gap: 8px;
+
+  text-align: left;
+}
+
+.recompensa-item {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 11px;
+
+  border: 3px solid #3d2b1e;
+  border-radius: 5px;
+
+  background: #4d6849;
+}
+
+.recompensa-item > span {
+  font-size: 25px;
+}
+
+.recompensa-item small {
+  display: block;
+
+  color: #afd47d;
+
+  font-size: 8px;
+}
+
+.recompensa-item strong {
+  display: block;
+
+  margin-top: 3px;
+
+  color: var(--creme);
+
+  font-size: 11px;
+}
+
+.mensagem-final {
+  margin: 18px 0;
+
+  color: var(--texto-suave);
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   ==================== INVENTÁRIO =========================
+   ========================================================= */
+
+.tela-inventario {
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 25px 40px 50px;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(121, 168, 91, 0.15),
+      transparent 28%
+    ),
+    linear-gradient(
+      180deg,
+      #294a38,
+      #1d3429
+    );
+}
+
+.inventario-header {
+  width: 100%;
+  max-width: 1200px;
+
+  min-height: 90px;
+
+  margin: 0 auto 30px;
+  padding: 16px 22px;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+
+  align-items: center;
+  gap: 20px;
+
+  border-radius: 6px;
+}
+
+.inventario-header > .botao-secundario {
+  justify-self: start;
+}
+
+.inventario-titulo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+}
+
+.inventario-titulo > span {
+  font-size: 30px;
+}
+
+.inventario-titulo p {
+  margin-bottom: 3px;
+
+  color: #b7d98a;
+
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+}
+
+.inventario-titulo h1 {
+  color: var(--papel);
+
+  font-family: Georgia, serif;
+  font-size: 27px;
+
+  letter-spacing: 2px;
+
+  text-shadow: 2px 2px 0 #49311f;
+}
+
+.inventario-contador {
+  justify-self: end;
+  text-align: right;
+}
+
+.inventario-contador strong {
+  display: block;
+
+  color: var(--creme);
+
+  font-family: Georgia, serif;
+  font-size: 20px;
+}
+
+.inventario-contador small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #afd17d;
+
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.inventario-conteudo {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+}
+
+.inventario-introducao {
+  margin-bottom: 28px;
+
+  text-align: center;
+}
+
+.inventario-introducao p {
+  margin-bottom: 6px;
+
+  color: #b7d98a;
+
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+}
+
+.inventario-introducao h2 {
+  margin-bottom: 8px;
+
+  color: var(--creme);
+
+  font-family: Georgia, serif;
+  font-size: 27px;
+}
+
+.inventario-introducao > span {
+  display: block;
+
+  max-width: 700px;
+
+  margin: 0 auto;
+
+  color: var(--texto-suave);
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.inventario-secao {
+  margin-bottom: 26px;
+
+  padding: 22px;
+
+  border-radius: 7px;
+}
+
+.secao-titulo {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 18px;
+  padding-bottom: 13px;
+
+  border-bottom: 3px solid rgba(255, 244, 214, 0.1);
+}
+
+.secao-titulo > span {
+  font-size: 25px;
+}
+
+.secao-titulo h3 {
+  color: var(--papel);
+
+  font-family: Georgia, serif;
+  font-size: 16px;
+}
+
+.secao-titulo small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: var(--texto-suave);
+
+  font-size: 10px;
+}
+
+/* =========================================================
+   TESOUROS
+   ========================================================= */
+
+.tesouros-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.tesouro-card {
+  min-height: 100px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 14px;
+
+  border: 3px solid #49321f;
+  border-radius: 5px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #536f4e,
+      #405c43
+    );
+
+  box-shadow: 0 3px 0 #29382d;
+
+  transition: 0.15s ease;
+}
+
+.tesouro-card:hover {
+  transform: translateY(-2px);
+
+  border-color: var(--dourado);
+}
+
+.tesouro-icon {
+  width: 58px;
+  height: 58px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 3px solid #513720;
+  border-radius: 6px;
+
+  background: #6f8e5c;
+
+  font-size: 31px;
+}
+
+.tesouro-card span {
+  color: #b7d98a;
+
+  font-size: 8px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.tesouro-card h4 {
+  margin: 3px 0 5px;
+
+  color: var(--creme);
+
+  font-family: Georgia, serif;
+  font-size: 14px;
+}
+
+.tesouro-card p {
+  color: var(--texto-suave);
+
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+/* =========================================================
+   PISTAS
+   ========================================================= */
+
+.pistas-lista {
+  display: grid;
+  gap: 10px;
+}
+
+.pista-card {
+  min-height: 92px;
+
+  display: grid;
+
+  grid-template-columns: 42px 50px 1fr 28px;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 11px 13px;
+
+  border: 3px solid #49321f;
+  border-radius: 5px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #4f6c4b,
+      #3c5941
+    );
+
+  cursor: grab;
+
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.pista-card:hover {
+  border-color: #7fae62;
+
+  transform: translateX(2px);
+}
+
+.pista-card:active {
+  cursor: grabbing;
+}
+
+.pista-card:focus-visible {
+  outline: 3px solid var(--dourado);
+  outline-offset: 3px;
+}
+
+.pista-card.pista-selecionada {
+  border-color: var(--dourado);
+
+  background:
+    linear-gradient(
+      135deg,
+      #68784d,
+      #4c6144
+    );
+}
+
+.pista-numero {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 3px solid #4b321f;
+  border-radius: 50%;
+
+  background: var(--papel);
+
+  color: #593b20;
+
+  font-family: Georgia, serif;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.pista-fragmento {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 3px solid #3f3021;
+  border-radius: 6px;
+
+  background: #64845b;
+
+  font-size: 25px;
+}
+
+.pista-conteudo {
+  min-width: 0;
+}
+
+.pista-conteudo > span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #b7d98a;
+
+  font-size: 8px;
+  font-weight: bold;
+  letter-spacing: 0.8px;
+}
+
+.pista-conteudo p {
+  color: var(--creme);
+
+  font-family: Georgia, serif;
+  font-size: 14px;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.pista-conteudo small {
+  display: block;
+
+  margin-top: 5px;
+
+  color: var(--texto-suave);
+
+  font-size: 9px;
+}
+
+.pista-arrastar {
+  color: #e0bf69;
+
+  font-size: 19px;
+
+  text-align: center;
+}
+
+.inventario-vazio {
+  min-height: 130px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 20px;
+
+  border: 3px dashed #715636;
+  border-radius: 5px;
+
+  background: rgba(39, 55, 40, 0.4);
+
+  text-align: center;
+}
+
+.inventario-vazio > span {
+  font-size: 30px;
+  opacity: 0.75;
+}
+
+.inventario-vazio p {
+  color: var(--texto-suave);
+
+  font-size: 12px;
+}
+
+.inventario-vazio small {
+  color: #a4a28a;
+
+  font-size: 10px;
+}
+
+.inventario-ajuda {
+  width: min(700px, 100%);
+
+  margin: 4px auto 0;
+
+  padding: 13px 16px;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 10px;
+
+  border: 3px solid #3e5a45;
+  border-radius: 5px;
+
+  background: #405d47;
+}
+
+.inventario-ajuda > span {
+  font-size: 20px;
+}
+
+.inventario-ajuda p {
+  color: var(--texto-suave);
+
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.inventario-ajuda strong {
+  color: #b9db8a;
+}
+
+/* =========================================================
+   ======================== HOME ===========================
+   ========================================================= */
+
+.tela-home {
+  min-height: 100vh;
+
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 40px 20px;
+
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(121, 168, 91, 0.2),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #254632,
+      #172c22
+    );
+}
+
+.conteudo-home {
+  position: relative;
+  z-index: 5;
+
+  width: min(760px, 100%);
+
+  text-align: center;
+}
+
+.simbolo-coroa {
+  margin-bottom: 12px;
+
+  color: var(--dourado);
+
+  font-family: Georgia, serif;
+  font-size: 43px;
+
+  text-shadow:
+    3px 3px 0 #49311f;
+}
+
+.pre-titulo {
+  color: #b9db8a;
+
+  font-size: 11px;
+  font-weight: bold;
+
+  letter-spacing: 4px;
+}
+
+.conteudo-home > h1 {
+  margin: 4px 0 2px;
+
+  color: var(--papel);
+
+  font-family: Georgia, serif;
+
+  font-size: clamp(48px, 8vw, 82px);
+
+  line-height: 0.95;
+
+  letter-spacing: 8px;
+
+  text-shadow:
+    4px 4px 0 #4b321f,
+    0 5px 12px rgba(0, 0, 0, 0.25);
+}
+
+.linha-titulo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 14px;
+
+  margin: 12px 0 24px;
+}
+
+.linha-titulo span {
+  width: 90px;
+  height: 4px;
+
+  border-radius: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #d1ae58
+    );
+}
+
+.linha-titulo span:last-child {
+  background:
+    linear-gradient(
+      90deg,
+      #d1ae58,
+      transparent
+    );
+}
+
+.linha-titulo p {
+  color: var(--creme);
+
+  font-size: 10px;
+  font-weight: bold;
+
+  letter-spacing: 3px;
+}
+
+.frase {
+  color: #d9d0ad;
+
+  font-family: Georgia, serif;
+
+  font-size: 16px;
+  font-style: italic;
+
+  line-height: 1.6;
+}
+
+.botoes-home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-top: 30px;
+}
+
+.botoes-home .botao-principal,
+.botoes-home .botao-secundario {
+  min-width: 190px;
+}
+
+.versao {
+  margin-top: 28px;
+
+  color: rgba(216, 201, 158, 0.6);
+
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+/* =========================================================
+   ELEMENTOS DECORATIVOS HOME
+   ========================================================= */
+
+.efeito-luz {
+  position: absolute;
+
+  width: 260px;
+  height: 260px;
+
+  border-radius: 50%;
+
+  filter: blur(25px);
+
+  opacity: 0.35;
+
+  pointer-events: none;
+}
+
+.luz-1 {
+  top: -100px;
+  left: -80px;
+
+  background: rgba(121, 168, 91, 0.25);
+}
+
+.luz-2 {
+  right: -100px;
+  bottom: -100px;
+
+  background: rgba(98, 174, 176, 0.2);
+}
+
+.bolhas {
+  position: absolute;
+
+  inset: 0;
+
+  overflow: hidden;
+
+  pointer-events: none;
+}
+
+.bolhas span {
+  position: absolute;
+
+  color: rgba(168, 214, 157, 0.3);
+
+  font-size: 25px;
+
+  animation:
+    subir-bolha 9s linear infinite;
+}
+
+.bolhas span:nth-child(1) {
+  left: 12%;
+  bottom: -30px;
+}
+
+.bolhas span:nth-child(2) {
+  left: 30%;
+  bottom: -60px;
+  animation-delay: 2s;
+}
+
+.bolhas span:nth-child(3) {
+  left: 55%;
+  bottom: -40px;
+  animation-delay: 4s;
+}
+
+.bolhas span:nth-child(4) {
+  left: 76%;
+  bottom: -70px;
+  animation-delay: 1s;
+}
+
+.bolhas span:nth-child(5) {
+  left: 90%;
+  bottom: -30px;
+  animation-delay: 5s;
+}
+
+@keyframes subir-bolha {
+  from {
+    transform: translateY(0) scale(0.7);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.8;
+  }
+
+  to {
+    transform: translateY(-110vh) scale(1.1);
+    opacity: 0;
+  }
+}
+
+.onda {
+  position: absolute;
+
+  left: -10%;
+  bottom: -90px;
+
+  width: 120%;
+  height: 170px;
+
+  border-radius: 50% 50% 0 0;
+
+  pointer-events: none;
+}
+
+.onda-1 {
+  background: rgba(42, 78, 60, 0.65);
+
+  transform: rotate(-2deg);
+}
+
+.onda-2 {
+  bottom: -125px;
+
+  background: rgba(98, 174, 176, 0.08);
+
+  transform: rotate(2deg);
+}
+
+/* =========================================================
+   ================ PERSONAGENS ============================
+   ========================================================= */
+
+.tela-personagens {
+  min-height: 100vh;
+
+  padding: 45px 30px 55px;
+
+  background:
+    radial-gradient(
+      circle at 20% 10%,
+      rgba(121, 168, 91, 0.18),
+      transparent 25%
+    ),
+    linear-gradient(
+      180deg,
+      #294a38,
+      #1d3328
+    );
+}
+
+.personagens-conteudo {
+  width: min(1180px, 100%);
+
+  margin: 0 auto;
+
+  text-align: center;
+}
+
+.personagens-conteudo .pre-titulo {
+  margin-bottom: 7px;
+
+  color: #b9db8a;
+
+  font-size: 10px;
+  font-weight: bold;
+
+  letter-spacing: 2px;
+}
+
+.personagens-conteudo > h1 {
+  color: var(--papel);
+
+  font-family: Georgia, serif;
+
+  font-size: clamp(27px, 4vw, 39px);
+
+  text-shadow:
+    3px 3px 0 #49311f;
+}
+
+.descricao-personagens {
+  max-width: 650px;
+
+  margin: 10px auto 30px;
+
+  color: var(--texto-suave);
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.personagens-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 14px;
+
+  text-align: left;
+}
+
+.personagem-card {
+  min-height: 290px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 17px;
+
+  border-radius: 6px;
+
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.personagem-card:hover {
+  transform: translateY(-4px);
+
+  border-color: #8db56b;
+}
+
+.personagem-card.personagem-selecionado {
+  border-color: var(--dourado);
+
+  background:
+    linear-gradient(
+      135deg,
+      #64774e,
+      #405b43
+    );
+
+  box-shadow:
+    0 0 0 3px rgba(246, 207, 99, 0.12),
+    0 7px 15px rgba(0, 0, 0, 0.3);
+}
+
+.personagem-sprite {
+  width: 76px;
+  height: 76px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 12px;
+
+  border: 3px solid #49321f;
+  border-radius: 7px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #6d9360,
+      #486b4b
+    );
+
+  font-size: 43px;
+
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 244, 214, 0.1);
+}
+
+.personagem-card h2 {
+  color: var(--creme);
+
+  font-family: Georgia, serif;
+
+  font-size: 17px;
+}
+
+.personagem-card > span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #b9db8a;
+
+  font-size: 9px;
+  font-weight: bold;
+
+  letter-spacing: 0.8px;
+}
+
+.personagem-card p {
+  min-height: 53px;
+
+  margin: 9px 0 13px;
+
+  color: var(--texto-suave);
+
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.personagem-card button {
+  width: 100%;
+
+  min-height: 38px;
+
+  margin-top: auto;
+
+  border: 3px solid #49321f;
+  border-radius: 5px;
+
+  background: #607d57;
+
+  color: var(--creme);
+
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.personagem-card button:hover {
+  background: #779865;
+
+  border-color: var(--dourado);
+
+  color: #fff4d6;
+}
+
+.personagem-card button.personagem-escolhido {
+  border-color: #527d43;
+
+  background: #638f52;
+
+  color: #e1f2b9;
+}
+
+.acoes-personagem {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-top: 28px;
+}
+
+.status-selecao {
+  min-height: 18px;
+
+  margin-top: 12px;
+
+  color: var(--texto-suave);
+
+  font-size: 10px;
+}
+
+.acoes-personagem button:disabled {
+  opacity: 0.4;
+}
+
+/* =========================================================
+   ======================= TUTORIAL ========================
+   ========================================================= */
+
+.tela-tutorial {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 35px 20px;
+
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      rgba(121, 168, 91, 0.16),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #294a38,
+      #1d3328
+    );
+}
+
+.tutorial-card {
+  width: min(850px, 100%);
+
+  padding: 35px;
+
+  border-radius: 7px;
+
+  text-align: center;
+}
+
+.tutorial-icon {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 38px;
+}
+
+.tutorial-card h1 {
+  color: var(--papel);
+
+  font-family: Georgia, serif;
+
+  font-size: 30px;
+
+  text-shadow:
+    3px 3px 0 #49311f;
+}
+
+.tutorial-card > p {
+  max-width: 650px;
+
+  margin: 10px auto 28px;
+
+  color: var(--texto-suave);
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.tutorial-items {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 12px;
+
+  margin-bottom: 28px;
+}
+
+.tutorial-items > div {
+  min-height: 150px;
+
+  padding: 17px 12px;
+
+  border: 3px solid #49321f;
+  border-radius: 5px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #4d6949,
+      #3c5740
+    );
+
+  box-shadow: 0 3px 0 #29382d;
+}
+
+.tutorial-items span {
+  display: block;
+
+  margin-bottom: 9px;
+
+  font-size: 28px;
+}
+
+.tutorial-items strong {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #b9db8a;
+
+  font-size: 12px;
+}
+
+.tutorial-items p {
+  color: var(--texto-suave);
+
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.tutorial-card > .botao-principal {
+  min-width: 180px;
+}
+
+/* =========================================================
+   ==================== CONCLUSÃO ==========================
+   ========================================================= */
+
+.tela-conclusao {
+  min-height: 100vh;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  padding: 40px 20px;
+
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(246, 207, 99, 0.16),
+      transparent 28%
+    ),
+    linear-gradient(
+      180deg,
+      #294a38,
+      #172a21
+    );
+}
+
+.conclusao-card {
+  width: min(820px, 100%);
+
+  position: relative;
+  z-index: 2;
+
+  padding: 42px;
+
+  border-radius: 8px;
+
+  text-align: center;
+}
+
+.conclusao-pre-titulo {
+  color: #b9db8a;
+
+  font-size: 10px;
+  font-weight: bold;
+
+  letter-spacing: 3px;
+}
+
+.tesouro-final {
+  margin: 15px 0 8px;
+
+  font-size: 65px;
+
+  filter:
+    drop-shadow(4px 5px 0 #49311f);
+
+  animation:
+    brilho-tesouro 2.5s ease-in-out infinite;
+}
+
+@keyframes brilho-tesouro {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+.conclusao-etapa {
+  color: var(--dourado);
+
+  font-size: 10px;
+  font-weight: bold;
+
+  letter-spacing: 2px;
+}
+
+.conclusao-card h1 {
+  margin-top: 7px;
+
+  color: var(--papel);
+
+  font-family: Georgia, serif;
+
+  font-size: clamp(27px, 5vw, 43px);
+
+  text-shadow:
+    3px 3px 0 #49311f;
+}
+
+.linha-conclusao {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin: 18px auto 25px;
+
+  max-width: 400px;
+
+  color: var(--dourado);
+
+  font-size: 10px;
+}
+
+.linha-conclusao span:first-child,
+.linha-conclusao span:last-child {
+  flex: 1;
+
+  height: 4px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(246, 207, 99, 0.65)
+    );
+}
+
+.linha-conclusao span:last-child {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(246, 207, 99, 0.65),
+      transparent
+    );
+}
+
+.epilogo {
+  max-width: 650px;
+
+  margin: 0 auto;
+
+  color: var(--texto-suave);
+
+  font-family: Georgia, serif;
+
+  font-size: 14px;
+
+  line-height: 1.75;
+}
+
+.epilogo p {
+  margin-bottom: 13px;
+}
+
+.epilogo strong {
+  color: var(--dourado);
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 13px;
+}
+
+.epilogo .revelacao {
+  margin-top: 22px;
+
+  color: var(--papel);
+
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.resultado-aventura {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 10px;
+
+  max-width: 550px;
+
+  margin: 27px auto;
+}
+
+.resultado-aventura > div {
+  padding: 14px 10px;
+
+  border: 3px solid #49321f;
+  border-radius: 5px;
+
+  background: #496548;
+}
+
+.resultado-aventura span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 22px;
+}
+
+.resultado-aventura strong {
+  display: block;
+
+  color: var(--dourado);
+
+  font-family: Georgia, serif;
+
+  font-size: 19px;
+}
+
+.resultado-aventura small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #b9db8a;
+
+  font-size: 8px;
+  font-weight: bold;
+
+  letter-spacing: 1px;
+}
+
+.mensagem-final-jogo {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  margin: 25px 0;
+
+  color: var(--dourado);
+}
+
+.mensagem-final-jogo p {
+  color: var(--texto-suave);
+
+  font-family: Georgia, serif;
+
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* =========================================================
+   PARTÍCULAS
+   ========================================================= */
+
+.particulas span {
+  position: absolute;
+
+  z-index: 1;
+
+  color: rgba(246, 207, 99, 0.45);
+
+  font-size: 18px;
+
+  pointer-events: none;
+
+  animation:
+    particula-flutuar 7s ease-in-out infinite;
+}
+
+.particulas span:nth-child(1) {
+  left: 12%;
+  top: 20%;
+}
+
+.particulas span:nth-child(2) {
+  left: 25%;
+  top: 70%;
+
+  animation-delay: 1s;
+}
+
+.particulas span:nth-child(3) {
+  right: 15%;
+  top: 25%;
+
+  animation-delay: 2s;
+}
+
+.particulas span:nth-child(4) {
+  right: 27%;
+  bottom: 18%;
+
+  animation-delay: 3s;
+}
+
+.particulas span:nth-child(5) {
+  left: 7%;
+  bottom: 30%;
+
+  animation-delay: 4s;
+}
+
+.particulas span:nth-child(6) {
+  right: 8%;
+  bottom: 40%;
+
+  animation-delay: 5s;
+}
+
+@keyframes particula-flutuar {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.25;
+  }
+
+  50% {
+    transform: translateY(-18px);
+    opacity: 0.75;
+  }
+}
+
+.conclusao-brilho {
+  position: absolute;
+
+  width: 300px;
+  height: 300px;
+
+  border-radius: 50%;
+
+  filter: blur(60px);
+
+  pointer-events: none;
+}
+
+.brilho-1 {
+  top: -120px;
+  left: -100px;
+
+  background: rgba(121, 168, 91, 0.14);
+}
+
+.brilho-2 {
+  right: -100px;
+  bottom: -120px;
+
+  background: rgba(246, 207, 99, 0.12);
+}
+
+.tela-conclusao .botao-principal {
+  min-width: 220px;
+}
+
+/* =========================================================
+   HUD DIREITA / INVENTÁRIO
+   ========================================================= */
+
+.hud-direita {
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+}
+
+.botao-inventario {
+  min-height: 42px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 7px 12px;
+
+  border: 3px solid var(--madeira-escura);
+  border-radius: 5px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #708d5d,
+      #506e4c
+    );
+
+  color: var(--creme);
+
+  font-size: 18px;
+  font-weight: bold;
+
+  box-shadow:
+    0 3px 0 #26382b;
+
+  transition: 0.15s ease;
+}
+
+.botao-inventario span {
+  color: #c2dd94;
+
+  font-size: 9px;
+  letter-spacing: 0.8px;
+}
+
+.botao-inventario:hover {
+  border-color: var(--dourado);
+
+  background: #698b5c;
+
+  transform: translateY(-2px);
+}
+
+.botao-inventario:focus-visible {
+  outline: 3px solid #b9db8a;
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   RESPONSIVIDADE MAPA
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .tela-mapa {
+    padding: 20px;
+  }
+
+  .mapa-header {
+    grid-template-columns: 1fr auto;
+    gap: 15px;
+  }
+
+  .titulo-mapa {
+    grid-column: 1 / -1;
+    grid-row: 1;
+
+    justify-self: center;
+  }
+
+  .jogador-hud {
+    grid-row: 2;
+  }
+
+  .fragmentos-hud {
+    grid-row: 2;
+  }
+
+  .mapa-titulo {
+    gap: 30px;
+  }
+
+  .mapa-titulo-texto {
+    min-width: 0;
+  }
+
+  .mapa-titulo-texto h2 {
+    font-size: 24px;
+  }
+
+  .mapa-descricao {
+    font-size: 14px;
+  }
+
+  .rota-mapa {
+    min-height: 650px;
+  }
+
+  .personagens-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+  .tesouros-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inventario-header {
+    grid-template-columns: 1fr auto;
+  }
+
+  .inventario-titulo {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .inventario-header > .botao-secundario {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .inventario-contador {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}
+
+/* =========================================================
+   CELULAR
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .tela-mapa {
+    padding: 12px;
+  }
+
+  .mapa-header {
+    min-height: auto;
+
+    padding: 14px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .titulo-mapa {
+    grid-column: 1 / -1;
+    grid-row: 1;
+
+    margin-bottom: 10px;
+  }
+
+  .titulo-mapa h1 {
+    font-size: 24px;
+  }
+
+  .jogador-hud {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .fragmentos-hud {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .mapa-titulo {
+    display: block;
+
+    text-align: center;
+  }
+
+  .mapa-titulo-texto {
+    margin-bottom: 10px;
+  }
+
+  .mapa-titulo-texto h2 {
+    font-size: 22px;
+  }
+
+  .mapa-descricao {
+    display: block;
+
+    font-size: 13px;
+  }
+
+  .rota-mapa {
+    min-height: auto;
+
+    gap: 12px;
+  }
+
+  .linha-rota {
+    display: none;
+  }
+
+  .mapa-node {
+    width: 100%;
+
+    min-height: 76px;
+  }
+
+  .mapa-node:nth-child(odd),
+  .mapa-node:nth-child(even) {
+    align-self: center;
+  }
+
+  .node-info strong {
+    white-space: normal;
+
+    font-size: 14px;
+  }
+
+  .mapa-footer {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .mapa-footer p {
+    text-align: center;
+  }
+
+  /* AVENTURA */
+
+  .aventura-header {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+  }
+
+  .aventura-titulo {
+    width: 100%;
+
+    order: 3;
+  }
+
+  .dificuldade {
+    margin-left: auto;
+  }
+
+  .painel-historia,
+  .painel-quiz,
+  .painel-tesouro,
+  .painel-pista,
+  .painel-concluido {
+    width: calc(100% - 24px);
+
+    padding: 18px;
+  }
+
+  /* INVENTÁRIO */
+
+  .tela-inventario {
+    padding: 12px;
+  }
+
+  .inventario-header {
+    min-height: auto;
+
+    padding: 14px;
+  }
+
+  .inventario-titulo > span {
+    font-size: 25px;
+  }
+
+  .inventario-titulo h1 {
+    font-size: 23px;
+  }
+
+  .inventario-introducao h2 {
+    font-size: 22px;
+  }
+
+  .inventario-secao {
+    padding: 15px;
+  }
+
+  .tesouro-card {
+    align-items: flex-start;
+  }
+
+  .pista-card {
+    grid-template-columns: 34px 42px 1fr;
+
+    gap: 9px;
+  }
+
+  .pista-numero {
+    width: 30px;
+    height: 30px;
+
+    font-size: 10px;
+  }
+
+  .pista-fragmento {
+    width: 40px;
+    height: 40px;
+
+    font-size: 21px;
+  }
+
+  .pista-conteudo p {
+    font-size: 12px;
+  }
+
+  .pista-arrastar {
+    display: none;
+  }
+
+  /* HOME */
+
+  .tela-home {
+    padding: 25px 15px;
+  }
+
+  .conteudo-home > h1 {
+    font-size: 48px;
+
+    letter-spacing: 5px;
+  }
+
+  .linha-titulo span {
+    width: 45px;
+  }
+
+  .frase {
+    font-size: 14px;
+  }
+
+  .botoes-home {
+    flex-direction: column;
+  }
+
+  .botoes-home .botao-principal,
+  .botoes-home .botao-secundario {
+    width: min(300px, 100%);
+  }
+
+  /* PERSONAGENS */
+
+  .tela-personagens {
+    padding: 28px 14px 40px;
+  }
+
+  .personagens-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .personagem-card {
+    min-height: auto;
+  }
+
+  .personagem-sprite {
+    width: 68px;
+    height: 68px;
+  }
+
+  .acoes-personagem {
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+  }
+
+  .acoes-personagem button {
+    width: 100%;
+  }
+
+  /* TUTORIAL */
+
+  .tutorial-card {
+    padding: 24px 16px;
+  }
+
+  .tutorial-card h1 {
+    font-size: 25px;
+  }
+
+  .tutorial-items {
+    grid-template-columns: 1fr;
+  }
+
+  /* CONCLUSÃO */
+
+  .tela-conclusao {
+    padding: 20px 12px;
+  }
+
+  .conclusao-card {
+    padding: 28px 18px;
+  }
+
+  .tesouro-final {
+    font-size: 52px;
+  }
+
+  .epilogo {
+    font-size: 13px;
+  }
+
+  .resultado-aventura {
+    gap: 6px;
+  }
+
+  .resultado-aventura > div {
+    padding: 11px 6px;
+  }
+
+  .resultado-aventura strong {
+    font-size: 16px;
+  }
+}
+
+/* =========================================================
+   TABLET / PERSONAGENS
+   ========================================================= */
+
+@media (max-width: 760px) {
+  .personagens-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .tutorial-items {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+}
+
+/* =========================================================
+   TELAS MUITO PEQUENAS
+   ========================================================= */
+
+@media (max-width: 560px) {
+  .personagens-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tutorial-items {
+    grid-template-columns: 1fr;
+  }
+
+  .resultado-aventura {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   REDUZIR ANIMAÇÕES
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.personagem-card {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.personagem-retrato {
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.personagem-imagem {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.personagem-detalhes {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  .personagem-retrato {
+    height: 120px;
+  }
+}
+
+/* ENIGMA FINAL */
+.tela-enigma-final {
+  min-height: 100vh;
+  padding: 42px 20px;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at top, #174b59, #092b39 58%, #061d2a);
+  color: #f8e9c7;
+}
+.enigma-card {
+  width: min(900px, 100%);
+  padding: clamp(24px, 5vw, 52px);
+  border: 3px solid #bd9452;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #f3dfb5, #d7b77f);
+  color: #49321f;
+  box-shadow: 0 18px 55px #0008, inset 0 0 0 7px #8b633b22;
+  text-align: center;
+}
+.enigma-etiqueta { letter-spacing: .2em; font-weight: 800; color: #8b552d; }
+.enigma-icone { font-size: 3.5rem; margin: 12px 0; }
+.enigma-card h1 { color: #59371f; font-family: Georgia, serif; letter-spacing: .08em; }
+.enigma-card > p { line-height: 1.7; }
+.enigma-contagem { font-weight: 800; }
+.enigma-fragmentos { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 10px; margin: 26px 0; }
+.enigma-fragmento { padding: 13px 9px; border: 1px solid #a77b49; border-radius: 9px; background: #fff4d8a8; display: grid; gap: 6px; }
+.enigma-fragmento span { font-size: .68rem; letter-spacing: .1em; color: #87613b; }
+.enigma-fragmento strong { font-size: 1.1rem; }
+.enigma-card h2 { margin: 25px 0 15px; font-size: 1.2rem; }
+.enigma-opcoes { display: grid; gap: 10px; margin-bottom: 22px; }
+.enigma-opcao { display: flex; gap: 12px; align-items: center; text-align: left; padding: 15px; border: 2px solid #a77b49; border-radius: 10px; background: #fff8e8; color: #49321f; cursor: pointer; }
+.enigma-opcao.selecionada { border-color: #176c61; background: #e2f0d9; }
+.enigma-opcao:focus-visible, .enigma-card button:focus-visible { outline: 3px solid #176cbb; outline-offset: 3px; }
+.enigma-feedback { margin: 20px 0; padding: 14px; border-radius: 9px; background: #fff8e8; font-weight: 700; }
+@media (max-width: 600px) { .tela-enigma-final { padding: 18px 12px; } .enigma-card { padding: 22px 16px; } }
